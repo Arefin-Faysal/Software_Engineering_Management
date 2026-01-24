@@ -1,0 +1,38 @@
+class BankAccount:
+    def __init__(self, account_holder, balance):
+        self.account_holder = account_holder
+        # The double underscore __ prefix makes this attribute "private"
+        # This is the core of encapsulation.
+        self.__balance = balance 
+
+    # Getter method: The "Front Door" to see the data
+    def get_balance(self):
+        return f"Current balance for {self.account_holder}: ${self.__balance}"
+
+    # Setter method: The controlled way to change the data
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Successfully deposited ${amount}")
+        else:
+            print("Error: Deposit amount must be positive.")
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            print(f"Successfully withdrew ${amount}")
+        else:
+            print("Error: Insufficient funds or invalid amount.")
+
+# --- Usage ---
+my_account = BankAccount("Alex", 500)
+
+# 1. Accessing via methods works perfectly
+print(my_account.get_balance()) # Output: $500
+
+# 2. Trying to access the private variable directly will fail
+# print(my_account.__balance) # This would raise an AttributeError
+
+# 3. Modifying data safely through encapsulation
+my_account.deposit(150)
+print(my_account.get_balance()) # Output: $650
