@@ -1,1 +1,97 @@
+**1) When to Use Interface vs Abstract Class — With a Story & Code Story: **
+
+Let’s imagine you are developing a system for a transportation company. The company deals with various types of vehicles: Cars, Bikes, Boats, and even Flying Drones. Each vehicle can perform basic tasks like move(), but they behave differently.
+
+Interface Use Case: You want to create a generic blueprint for anything that can "move" — whether it's a car, a bird, or a robotic arm. So you create an interface called Movable. This allows completely different types of objects (not related by inheritance) to implement movement.
+
+Abstract Class Use Case: Now, for vehicles, they usually have some common properties — like speed, fuel, or engineStart() logic. These can be shared. So you create an abstract class called Vehicle, which provides base functionality.
+
+
+// Interface: For anything that moves
+interface Movable {
+    void move();
+}
+
+// Abstract class: For vehicles with common behavior
+abstract class Vehicle implements Movable {
+    int speed;
+
+    Vehicle(int speed) {
+        this.speed = speed;
+    }
+
+    void engineStart() {
+        System.out.println("Engine started");
+    }
+
+    abstract void fuelType();
+}
+
+// A specific vehicle
+class Car extends Vehicle {
+    Car(int speed) {
+        super(speed);
+    }
+
+    @Override
+    public void move() {
+        System.out.println("Car is moving at speed: " + speed);
+    }
+
+    @Override
+    void fuelType() {
+        System.out.println("Car uses petrol");
+    }
+}
+
+// Something non-vehicle that still moves
+class Drone implements Movable {
+    public void move() {
+        System.out.println("Drone is flying through GPS coordinates");
+    }
+}
+
+*When to Use
+
+Use Interface:
+
+  i) When unrelated classes need to share behavior (e.g., Drone, Bird)
+  ii) No state or implementation needed.
+  iii) Multiple interfaces can be implemented.
+Use Abstract Class:
+
+  i) When creating a base for closely related classes (e.g., all Vehicles).
+  ii) Shared state/implementation needed.
+  iii) Only one abstract class can be extended.
+
+2) Is It True That Interface Method Calls Are Slower?
+
+Explanation: Historically, interface methods were slightly slower because of dynamic dispatch (lookup through a vtable). But with modern JVMs (JIT compilation), the performance difference is negligible.
+
+So, it’s not practically true anymore — you should choose based on design, not performance.
+
+
+
+interface Animal {
+    void makeSound();
+}
+
+abstract class AbstractAnimal {
+    abstract void makeSound();
+}
+
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Bark!");
+    }
+}
+
+class Cat extends AbstractAnimal {
+    public void makeSound() {
+        System.out.println("Meow!");
+    }
+}
+
+
+
 
